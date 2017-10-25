@@ -39,7 +39,7 @@ namespace PlugAPI.Controllers
 
             var value = (string)msgReceived.Root.Value;
             List<Models.State> list = new List<Models.State>();
-            list.Add(new Models.State() { CurrentState = (value == "ON") });
+            list.Add(new Models.State() { IsOn = (value == "ON") });
 
             var json = JsonConvert.SerializeObject(list, Newtonsoft.Json.Formatting.None);
             var response = Request.CreateResponse(HttpStatusCode.OK);

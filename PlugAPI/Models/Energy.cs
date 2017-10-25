@@ -5,8 +5,10 @@ using System.Web;
 
 namespace PlugAPI.Models
 {
-    public class State
+    public class Energy
     {
-        public bool IsOn { get; set; }
+        public double Day;
+        public double Week;
+        public double Month;
     }
 }
