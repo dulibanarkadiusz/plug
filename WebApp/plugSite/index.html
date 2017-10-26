@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script>
+	var app = angular.module('myApp', []);
+	app.config(['$qProvider', function ($qProvider) {
+		$qProvider.errorOnUnhandledRejections(false);
+	}]);
+	app.controller('myCtrl', function($scope, $http) {
+	  $scope.abc=function(){
+	$http.get("http://localhost:50323/api/DeviceConfig")
+	  .then(function(response) {
+		  //$scope.myWelcome = response;
+		//console.log(response);
+		//response['model']
+	  });
+	}
+	});
+	</script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="theme.css" rel="stylesheet">
+
+	<script> 
+	$(document).ready(function(){
+		$("#flip").click(function(){
+			$("#panel").slideDown("slow");
+		});
+	});
+
+	</script>
+
+	<style> 
+	#panel, #flip {
+		padding: 5px;
+		text-align: center;
+		background-color: #e5eecc;
+		border: solid 1px #c3c3c3;
+	}
+
+	#panel {
+		padding: 50px;
+		display: none;
+	}
+	</style>
+
+  </head>
+  <body>
+
+	<div id="flip">Click to slide down panel</div>
+	<div id="panel">Hello world!</div>
+
+	<div ng-app="myApp">
+	<div ng-controller="myCtrl"><button ng-click="abc()">tes</button></div>
+	<p>Input something in the input box:</p>
+	<p>Name : <input type="text" ng-model="name" placeholder="Enter name here"></p>
+	<h1>Hello {{name}}</h1>
+
+	<h1>{{myWelcome}}</h1>
+
+	</div>
+
+  </body>
+
+</html>

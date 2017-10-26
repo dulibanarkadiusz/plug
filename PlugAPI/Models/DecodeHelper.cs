@@ -29,7 +29,7 @@ namespace PlugAPI.Models
             var schedulestr = string.Empty;
             foreach(var s in scheduleList)
             {
-                string startEncode = s.HourStart
+                string startEncode = s.HourStart;
             }
 
             return string.Empty;
