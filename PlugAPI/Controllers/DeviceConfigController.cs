@@ -63,7 +63,7 @@ namespace PlugAPI.Controllers
                                                          <SMARTPLUG id=""edimax"">
 	                                                     <CMD id=""setup"">
                                                              <SYSTEM_INFO>
-                                                                <Device.System.Name>"+name+@"<Device.System.Name/>
+                                                                <Device.System.Name>"+name+@"</Device.System.Name>
                                                              </SYSTEM_INFO>
 	                                                     </CMD>
                                                        </SMARTPLUG>");

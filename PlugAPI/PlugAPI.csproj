@@ -411,6 +411,7 @@
     <Compile Include="Controllers\CurrentRunController.cs" />
     <Compile Include="Controllers\DeviceConfigController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SmartPlugController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Global.asax.cs">
@@ -420,8 +421,11 @@
     <Compile Include="Helpers\Config.cs" />
     <Compile Include="Models\Current.cs" />
     <Compile Include="Models\CurrentRun.cs" />
+    <Compile Include="Models\DecodeHelper.cs" />
     <Compile Include="Models\DeviceConfig.cs" />
     <Compile Include="Models\Energy.cs" />
+    <Compile Include="Models\Hour.cs" />
+    <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
