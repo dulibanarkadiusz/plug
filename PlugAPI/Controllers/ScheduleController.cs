@@ -68,6 +68,7 @@ namespace PlugAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Post([FromBody] object jsonObject, bool overridden = true)
         {
+            string xxx = jsonObject.ToString();
             XDocument msgToSend = XDocument.Parse(@"<?xml version=""1.0"" encoding=""UTF8""?>
                                                    <SMARTPLUG id=""edimax"">
                                                       <CMD id=""get"">
@@ -88,12 +89,16 @@ namespace PlugAPI.Controllers
             var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(jsonObject.ToString());
             for (int i=0; i<=6; i++)
             {
+                var list = scheduleList.Where(x => x.DayOfWeek == i).ToList();
+                var decodedListStr = DecodeHelper.EncodeSchedule(list);
                 if (overridden)
-                    msgToSend.Descendants("Device.System.Power.Schedule."+i+".List").First().Value = DecodeHelper.EncodeSchedule(scheduleList.Where(x => x.DayOfWeek == i).ToList());
+                {
+                    msgToSend.Descendants("Device.System.Power.Schedule." + i + ".List").First().Value = decodedListStr;
+                }
                 else
                 {
                     var connector = (msgToSend.Descendants("Device.System.Power.Schedule." + i + ".List").First().Value.ToString().Length > 0) ? "-" : "";
-                    msgToSend.Descendants("Device.System.Power.Schedule." + i + ".List").First().Value += connector + DecodeHelper.EncodeSchedule(scheduleList.Where(x => x.DayOfWeek == i).ToList());
+                    msgToSend.Descendants("Device.System.Power.Schedule." + i + ".List").First().Value += connector + decodedListStr;
                 }
             }
 
@@ -111,8 +116,14 @@ namespace PlugAPI.Controllers
             return Get();
         }
 
-        [HttpDelete]
-        public HttpResponseMessage Delete([FromBody] object scheduleToRemove)
+        /// <summary>
+        /// Testowa metoda 
+        /// </summary>
+        /// <param name="jsonObject"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(IEnumerable<Schedule>))]
+        [HttpPut]
+        public HttpResponseMessage Put([FromBody] object jsonObject)
         {
             XDocument msgToSend = XDocument.Parse(@"<?xml version=""1.0"" encoding=""UTF8""?>
                                                    <SMARTPLUG id=""edimax"">
@@ -131,11 +142,34 @@ namespace PlugAPI.Controllers
             }
             msgToSend.Descendants("CMD").First().Attribute("id").Value = "setup";
 
-            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(scheduleToRemove.ToString());
-            var currentValue = msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value;
-            msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value = currentValue.Replace(DecodeHelper.EncodeSchedule(scheduleList), "");
 
-            return new HttpResponseMessage();
+            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(jsonObject.ToString());
+            var currentValue = msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value;
+
+            string decodedVal;
+            try
+            {
+                decodedVal = DecodeHelper.EncodeSchedule(scheduleList);
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+
+
+            if (currentValue.Contains("-" + decodedVal))
+            {
+                decodedVal = "-" + decodedVal;
+            }
+            else if (!currentValue.Contains(decodedVal))
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+
+            msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value = currentValue.Replace(decodedVal, "");
+            cm.SendMessage(msgToSend, Config.IPadress, Config.Username, Config.Password);
+
+            return Get();
         }
     }
 }

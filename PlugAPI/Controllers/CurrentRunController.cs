@@ -12,7 +12,6 @@ using System.Web.Http.Description;
 using System.Xml.Linq;
 namespace PlugAPI.Controllers
 {
-
     public class CurrentRunController : ApiController
     {
         CommunicationHelper cm = new CommunicationHelper();

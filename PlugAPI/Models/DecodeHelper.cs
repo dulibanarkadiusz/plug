@@ -17,22 +17,31 @@ namespace PlugAPI.Models
             return new Schedule() { DayOfWeek = dayOfWeekPos, HourStart = hourStart.ToString(), HourEnd = hourEnd.ToString(), IsEnabled = (hash[4]=='1') };
         }
 
-        public static string EncodeHour(Hour hour)
+        public static string EncodeHour(string hour)
         {
-           string hourString = hour.ToString();
+            var parts = hour.Split(':');
 
-            return string.Empty;
+            return _Template[int.Parse(parts[0])] + "" + _Template[int.Parse(parts[1])];
         }
 
         public static string EncodeSchedule(List<Schedule> scheduleList)
-        {
+        { 
+            if (scheduleList.Count == 0)
+                return string.Empty;
+
             var schedulestr = string.Empty;
-            foreach(var s in scheduleList)
+            string startEncode = string.Empty, endEncode = string.Empty;
+            string output = "";
+            foreach (var s in scheduleList)
             {
-                string startEncode = s.HourStart;
+                startEncode = EncodeHour(s.HourStart);
+                endEncode = EncodeHour(s.HourEnd);
+                output += String.Format("{0}{1}1-", startEncode, endEncode);
             }
 
-            return string.Empty;
+            output = output.Substring(0, output.Length - 1);
+
+            return output;
         }
     }
 }
