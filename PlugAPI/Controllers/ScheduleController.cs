@@ -65,47 +65,77 @@ namespace PlugAPI.Controllers
         }
 
         [ResponseType(typeof(IEnumerable<Schedule>))]
-        public HttpResponseMessage Post(string jsonObject)
+        [HttpPost]
+        public HttpResponseMessage Post([FromBody] object jsonObject, bool overridden = true)
         {
             XDocument msgToSend = XDocument.Parse(@"<?xml version=""1.0"" encoding=""UTF8""?>
                                                    <SMARTPLUG id=""edimax"">
-                                                      <CMD id=""setup"">
+                                                      <CMD id=""get"">
                                                          <SCHEDULE/>
                                                       </CMD>
                                                    </SMARTPLUG>");
 
-            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(jsonObject);
+            try
+            {
+                msgToSend = cm.SendMessage(msgToSend, Config.IPadress, Config.Username, Config.Password);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+            msgToSend.Descendants("CMD").First().Attribute("id").Value = "setup";
+
+            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(jsonObject.ToString());
+            for (int i=0; i<=6; i++)
+            {
+                if (overridden)
+                    msgToSend.Descendants("Device.System.Power.Schedule."+i+".List").First().Value = DecodeHelper.EncodeSchedule(scheduleList.Where(x => x.DayOfWeek == i).ToList());
+                else
+                {
+                    var connector = (msgToSend.Descendants("Device.System.Power.Schedule." + i + ".List").First().Value.ToString().Length > 0) ? "-" : "";
+                    msgToSend.Descendants("Device.System.Power.Schedule." + i + ".List").First().Value += connector + DecodeHelper.EncodeSchedule(scheduleList.Where(x => x.DayOfWeek == i).ToList());
+                }
+            }
+
 
             XDocument msgReceived;
-
-            scheduleList.Where(x => x.DayOfWeek == 0).ToList();
-
-            msgToSend.Descendants("Device.System.Power.Schedule.0.List").First().Value = "";
-            msgToSend.Descendants("Device.System.Power.Schedule.1.List").First().Value = "";
-            msgToSend.Descendants("Device.System.Power.Schedule.2.List").First().Value = "";
-            msgToSend.Descendants("Device.System.Power.Schedule.3.List").First().Value = "";
-            msgToSend.Descendants("Device.System.Power.Schedule.4.List").First().Value = "";
-            msgToSend.Descendants("Device.System.Power.Schedule.5.List").First().Value = "";
-            msgToSend.Descendants("Device.System.Power.Schedule.6.List").First().Value = "";
-
-            /*foreach (XElement xElement in scheduleNode.Elements())
-           {
-               if (xElement.Name.ToString().Contains("Device.System.Power.Schedule."))
-               {
-                   if (xElement.Name.ToString().Contains(".List"))
-                   {
-                       xElement.Value = PreparePowerScheduleList(entriesToSchedule);
-                   }
-                   else
-                   {
-                       xElement.Value = PreparePowerSchedule(entriesToSchedule);
-                   }
-               }
-           }
-           */
-
+            try
+            {
+                msgReceived = cm.SendMessage(msgToSend, Config.IPadress, Config.Username, Config.Password);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
 
             return Get();
+        }
+
+        [HttpDelete]
+        public HttpResponseMessage Delete([FromBody] object scheduleToRemove)
+        {
+            XDocument msgToSend = XDocument.Parse(@"<?xml version=""1.0"" encoding=""UTF8""?>
+                                                   <SMARTPLUG id=""edimax"">
+                                                      <CMD id=""get"">
+                                                         <SCHEDULE/>
+                                                      </CMD>
+                                                   </SMARTPLUG>");
+
+            try
+            {
+                msgToSend = cm.SendMessage(msgToSend, Config.IPadress, Config.Username, Config.Password);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+            msgToSend.Descendants("CMD").First().Attribute("id").Value = "setup";
+
+            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(scheduleToRemove.ToString());
+            var currentValue = msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value;
+            msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value = currentValue.Replace(DecodeHelper.EncodeSchedule(scheduleList), "");
+
+            return new HttpResponseMessage();
         }
     }
 }
