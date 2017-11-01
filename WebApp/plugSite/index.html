@@ -1,75 +1,52 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" ng-app="plugApp">
   <head>
     <meta charset="utf-8">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-	<script>
-	var app = angular.module('myApp', []);
-	app.config(['$qProvider', function ($qProvider) {
-		$qProvider.errorOnUnhandledRejections(false);
-	}]);
-	app.controller('myCtrl', function($scope, $http) {
-	  $scope.abc=function(){
-	$http.get("http://localhost:50323/api/DeviceConfig")
-	  .then(function(response) {
-		  //$scope.myWelcome = response;
-		//console.log(response);
-		//response['model']
-	  });
-	}
-	});
-	</script>
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="theme.css" rel="stylesheet">
-
-	<script> 
-	$(document).ready(function(){
-		$("#flip").click(function(){
-			$("#panel").slideDown("slow");
-		});
-	});
-
-	</script>
-
-	<style> 
-	#panel, #flip {
-		padding: 5px;
-		text-align: center;
-		background-color: #e5eecc;
-		border: solid 1px #c3c3c3;
-	}
-
-	#panel {
-		padding: 50px;
-		display: none;
-	}
-	</style>
-
+    <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/custom.css">
   </head>
   <body>
 
-	<div id="flip">Click to slide down panel</div>
-	<div id="panel">Hello world!</div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">SmartPlug</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-	<div ng-app="myApp">
-	<div ng-controller="myCtrl"><button ng-click="abc()">tes</button></div>
-	<p>Input something in the input box:</p>
-	<p>Name : <input type="text" ng-model="name" placeholder="Enter name here"></p>
-	<h1>Hello {{name}}</h1>
 
-	<h1>{{myWelcome}}</h1>
+    <div class="content container">
+      <!-- angular template here -->
+      <div class="wrapper">
+        <div ui-view></div>
+      </div>
 
-	</div>
+      <footer>
+        &copy; 2017.
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="app/app.module.js"></script>
+    <script type="text/javascript" src="app/app.routes.js"></script>
+    <script type="text/javascript" src="app/MainCtrl.js"></script>
 
   </body>
 
