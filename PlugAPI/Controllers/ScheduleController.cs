@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PlugAPI.Cors;
 using PlugAPI.Helpers;
 using PlugAPI.Models;
 using System;
@@ -13,6 +14,7 @@ using System.Xml.Linq;
 
 namespace PlugAPI.Controllers
 {
+    [AllowCross]
     public class ScheduleController : ApiController
     {
         CommunicationHelper cm = new CommunicationHelper();

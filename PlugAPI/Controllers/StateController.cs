@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PlugAPI.Cors;
 using PlugAPI.Helpers;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Xml.Linq;
 
 namespace PlugAPI.Controllers
 {
+    [AllowCross]
     public class StateController : ApiController
     {
         CommunicationHelper cm = new CommunicationHelper();
