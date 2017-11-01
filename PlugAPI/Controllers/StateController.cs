@@ -36,7 +36,7 @@ namespace PlugAPI.Controllers
             }
             catch(Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
             }
 
             var value = (string)msgReceived.Root.Value;
@@ -68,7 +68,7 @@ namespace PlugAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
             }
 
             return Get();

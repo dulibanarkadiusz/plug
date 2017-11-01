@@ -36,7 +36,7 @@ namespace PlugAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
             }
 
             List<Models.CurrentRun> list = new List<Models.CurrentRun>();

@@ -38,7 +38,7 @@ namespace PlugAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
             }
 
             List<Models.DeviceConfig> list = new List<Models.DeviceConfig>();
@@ -76,7 +76,7 @@ namespace PlugAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
             }
 
             return Get();

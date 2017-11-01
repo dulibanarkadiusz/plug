@@ -36,7 +36,7 @@ namespace PlugAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
             }
 
             List<string> decodedSchedule = new List<string>();
@@ -84,7 +84,7 @@ namespace PlugAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
             }
             msgToSend.Descendants("CMD").First().Attribute("id").Value = "setup";
 
@@ -112,7 +112,7 @@ namespace PlugAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
             }
 
             return Get();
@@ -169,8 +169,14 @@ namespace PlugAPI.Controllers
             }
 
             msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value = currentValue.Replace(decodedVal, "");
-            cm.SendMessage(msgToSend, Config.IPadress, Config.Username, Config.Password);
-
+            try
+            {
+                cm.SendMessage(msgToSend, Config.IPadress, Config.Username, Config.Password);
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.GatewayTimeout, ex);
+            }
             return Get();
         }
     }
