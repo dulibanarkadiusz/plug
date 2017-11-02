@@ -6,27 +6,270 @@ body {
 	background: #e9eef1;
 }
 
+.row{
+	margin: 0 !important;
+}
+
 .content{
 	height: auto !important;
 	height: 100%;
 	min-height: 100%;
 }
 
-.wrapper{
-	margin-top: 80px;
+.box{
 	background: #fff;
 	box-sizing: border-box;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
 	border-radius: 2px;
-	padding: 10px;
-	height: auto !important;
-	height: 100vh;
-	min-height: calc(100vh - 160px);
+}
+
+.error-box{
+    color: #ad0303;
+    text-align: right;
+    min-height: 26px;
+}
+
+.main{
+	margin: 15px;
+}
+
+.main h2{
+	margin: 0;	
+}
+
+.wrapper{
+	margin-top: 55px;
+}
+
+
+.plug-header{
+	height: 60px;
+	padding: 5px;
+	background: #dadada;
+	border-bottom: 1px solid #a5a5a5;
+}
+
+.plug-header div{
+	display: inline-block;
+}
+
+.plug-header .plug-info div{
+	display: block;
+}
+
+.plug-header .plug-icon{
+	font-size: 40px;
+	line-height: 50px;
+	margin: 0 5px;
+	padding: 3px;
+	color: rgba(0, 0, 0, 0.6);
+    text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.plug-header .plug-icon > i{
+	vertical-align: top;
+}
+
+.plug-header .edit-box{
+	line-height: 10px;
+    vertical-align: top;
+    display: inline-block !important;
+    margin-left: 5px;
+}
+
+.plug-header .edit-box > i{
+	color: rgba(62, 62, 62, 0.32);
+	cursor: pointer;
+}
+
+.plug-header .edit-box > i:hover{
+	color: rgba(62, 62, 62, 0.82);
+}
+
+.plug-header .changeName-icon{
+	font-size: 14px;
+}
+
+.plug-header .plug-name{
+	height: 30px;
+	line-height: 30px;
+	font-size: 26px;
+	font-weight: bold;
+}
+
+.plug-header .plug-name input{
+    height: 28px;
+    font-size: 24px;
+}
+
+.plug-header .plug-name button{
+    height: 28px;
+    font-size: 13px;
+    line-height: 14px;
+}
+
+.plug-header .plug-model{
+	height: 20px;
+	line-height: 20px;
+	font-size: 12px;
+	color: #908e8e;
+}
+
+.plug-header .plug-state{
+	margin-top: 8px;
 }
 
 footer{
 	height: 50px;
 	color: #80878e;
-	margin-top: 10px;
-	padding: 10px;
+	margin: 10px 15px;
+	padding: 2px;
+}
+
+#status-container{
+	margin-right: -20px;
+}
+
+#status-container div{
+	display: inline-block;
+}
+
+#status-container .error-box{
+    width: calc(100% - 50px);
+}
+
+#status-container .spinner{
+	width: 40px;
+	text-align: right;
+    vertical-align: top;
+    padding-top: 5px;
+}
+
+#status-container .spinner > span{
+	font-size: 18px;
+    color: rgba(8, 8, 8, 0.5);
+}
+
+/* blink */
+@keyframes blink {  
+ 	0% { color: #ad0303; }
+  	100% { color: #fff; }
+}
+@-webkit-keyframes blink {
+  	0% { color: #ad0303; }
+  	100% { color: #fff; }
+}
+.blink {
+	-webkit-animation: blink 1s ease-out infinite;
+  	-moz-animation: blink 1s ease-out infinite;
+  	animation: blink 1s ease-out infinite;
+} 
+
+
+/* Toggle button */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #999;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #39ac70;
+  box-shadow: 1px 1px 20px 1px rgb(59, 221, 56)
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/* */
+
+.wait-alert{
+	min-height: 200px;
+}
+
+.wait-alert .wait-container{
+	display: table;
+	height: 200px;
+}
+
+.wait-alert .wait-container > p, .wait-alert .wait-container > i{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.wait-alert .wait-container > p{
+	font-size: 18px;
+}
+
+.wait-alert .wait-container > i {
+	width: 100%;
+	text-align: center;
+}
+
+.wait-alert .wait-icon{
+	font-size: 50px;
+}
+
+/* ------------------------- */
+
+#schedule-container{
+	margin-top: 15px;
+	padding: 15px;
+}
+
+.schedule-panel{
+	min-height: 80px;
+}
+
+.addSchedule-container{
+	text-align: right;
+}
+
+.addSchedule-container .row div{
+	text-align: left;
+}
+
+.table .col-actions{
+	padding: 6px;
 }

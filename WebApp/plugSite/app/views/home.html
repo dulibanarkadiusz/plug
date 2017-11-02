@@ -1,3 +1,56 @@
-<div ng-controller="mainCtrl">
-	<h2>{{header}}</h2>
+<div class="wrapper" ng-controller="mainCtrl" ng-init="init()">
+	<div id="status-container">
+		<div class="blink error-box">{{errorString}}</div>
+		<div class="spinner" ng-show="isDataProccessing">
+			<span class="fa fa-cog fa-spin fa-3x fa-fw"></span>
+		</div>
+	</div>
+
+	<div class="box main">
+		<div class="plug-header">
+			<div class="plug-icon"><i class="fa fa-plug"></i></div>
+			<div class="plug-info">
+				<div class="plug-name" ng-hide="editEnabled">
+					{{device.Name}}
+					<div class="edit-box">
+						<i class="fa fa-pencil changeName-icon" data-toggle="tooltip" data-placement="right" title="Zmień nazwę urządzenia" aria-hidden="true" ng-click="enableEdit()"></i>
+					</div>
+				</div>
+				<div class="plug-name" ng-show="editEnabled">
+					<input type="text" ng-model="device.Name">
+					<button class="btn btn-success btn-md" ng-click="saveDeviceName()">Zapisz</button>
+				</div>
+				<div class="plug-model">Model: {{device.Model}}</div>
+				
+			</div>
+			<div class="plug-state pull-right">
+				<label class="switch">
+				  	<input type="checkbox" ng-change="switchStatus()" ng-model="state.IsOn">
+				  	<span data-toggle="tooltip" title="Włącz/wyłącz wtyczkę" class="slider"></span>
+				</label>
+			</div>
+		</div>
+
+		<div id="schedule-container">
+			
+		</div>
+	</div>
 </div>
+
+
+
+<script>
+  $(function(){
+      $('[data-toggle="tooltip-indicator"]').tooltip(); 
+      $('[data-toggle="tooltip"]').tooltip(); 
+  });
+
+  $(".indicatorLastToggle").mouseenter( function(){
+  	$('[data-toggle="tooltip-indicator"]').tooltip('fixTitle');
+  	$('[data-toggle="tooltip-indicator"]').tooltip('show');
+  });
+
+  $(".indicatorLastToggle").mouseleave( function(){
+  	$('[data-toggle="tooltip-indicator"]').tooltip('hide');
+  });
+</script>

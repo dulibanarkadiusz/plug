@@ -1,4 +1,6 @@
 var app = angular.module("plugApp", [
+		"angularMoment",
 		"plugAppRouter",
-		"plugAppMainCtrl"
+		"plugAppMainCtrl",
+		"ui.bootstrap"
 	]);
