@@ -2,6 +2,7 @@
 <html lang="pl" ng-app="plugApp">
   <head>
     <meta charset="utf-8">
+	<title>SmartPlug - manager</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
@@ -26,13 +27,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">SmartPlug</a>
+          <a class="navbar-brand" href="#">SmartPlugManager</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="active"><a href="#">Zarządzanie</a></li>
+            <li><a href="#about">Energia i koszty</a></li>
           </ul>
         </div>
       </div>
@@ -45,7 +45,7 @@
       <div ui-view></div>
 
       <footer>
-        &copy; 2017. x <script type="text/javascript">moment().format('MMMM Do YYYY, h:mm:ss a');</script>
+        &copy; 2017 <script type="text/javascript">moment().format('MMMM Do YYYY, h:mm:ss a');</script>
       </footer>
     </div>
 
