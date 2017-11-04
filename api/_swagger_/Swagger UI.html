@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://localhost:8081/swagger/ui/index -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <title>Swagger UI</title>
+  <link rel="icon" type="image/png" href="http://localhost:8081/swagger/ui/images/favicon-32x32-png" sizes="32x32">
+  <link rel="icon" type="image/png" href="http://localhost:8081/swagger/ui/images/favicon-16x16-png" sizes="16x16">
+  <link href="./Swagger UI_files/typography-css" media="screen" rel="stylesheet" type="text/css">
+  <link href="./Swagger UI_files/reset-css" media="screen" rel="stylesheet" type="text/css">
+  <link href="./Swagger UI_files/screen-css" media="screen" rel="stylesheet" type="text/css">
+  <link href="./Swagger UI_files/reset-css" media="print" rel="stylesheet" type="text/css">
+  <link href="./Swagger UI_files/print-css" media="print" rel="stylesheet" type="text/css">
+  
+  <script src="./Swagger UI_files/jquery-1-8-0-min-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/jquery-slideto-min-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/jquery-wiggle-min-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/jquery-ba-bbq-min-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/handlebars-2-0-0-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/underscore-min-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/backbone-min-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/swagger-ui-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/highlight-7-3-pack-js" type="text/javascript"></script>
+  <script src="./Swagger UI_files/marked-js" type="text/javascript"></script>
+
+  <script src="./Swagger UI_files/swagger-oauth-js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      var url = window.location.search.match(/url=([^&]+)/);
+      if (url && url.length > 1) {
+        url = decodeURIComponent(url[1]);
+      } else {
+        url = "http://petstore.swagger.io/v2/swagger.json";
+      }
+
+        // Get Swashbuckle config into JavaScript
+      function arrayFrom(configString) {
+          return (configString !== "") ? configString.split('|') : [];
+      }
+
+      function stringOrNullFrom(configString) {
+          return (configString !== "null") ? configString : null;
+      }
+
+      window.swashbuckleConfig = {
+        rootUrl: 'http://localhost:8081',
+        discoveryPaths: arrayFrom('swagger/docs/v1'),
+        booleanValues: arrayFrom('true|false'),
+        validatorUrl: stringOrNullFrom(''),
+        customScripts: arrayFrom(''),
+        docExpansion: 'none',
+        oAuth2Enabled: ('false' == 'true'),
+        oAuth2ClientId: '',
+        oAuth2Realm: '',
+        oAuth2AppName: ''
+      };
+
+      window.swaggerUi = new SwaggerUi({
+        url: swashbuckleConfig.rootUrl + "/" + swashbuckleConfig.discoveryPaths[0],
+        dom_id: "swagger-ui-container",
+        booleanValues: swashbuckleConfig.booleanValues,
+        onComplete: function(swaggerApi, swaggerUi){
+          if (typeof initOAuth == "function" && swashbuckleConfig.oAuth2Enabled) {
+            initOAuth({
+              clientId: swashbuckleConfig.oAuth2ClientId,
+              realm: swashbuckleConfig.oAuth2Realm,
+              appName: swashbuckleConfig.oAuth2AppName
+            });
+          }
+          $('pre code').each(function(i, e) {
+            hljs.highlightBlock(e)
+          });
+
+          addApiKeyAuthorization();
+
+          window.swaggerApi = swaggerApi;
+          _.each(swashbuckleConfig.customScripts, function (script) {
+              $.getScript(script);
+          });
+        },
+        onFailure: function(data) {
+          log("Unable to Load SwaggerUI");
+        },
+        docExpansion: swashbuckleConfig.docExpansion,
+        sorter : "alpha"
+      });
+
+      if (window.swashbuckleConfig.validatorUrl !== '')
+          window.swaggerUi.options.validatorUrl = window.swashbuckleConfig.validatorUrl;
+
+      function addApiKeyAuthorization(){
+        var key = encodeURIComponent($('#input_apiKey')[0].value);
+        if(key && key.trim() != "") {
+            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
+            window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
+            log("added key " + key);
+        }
+      }
+
+      $('#input_apiKey').change(addApiKeyAuthorization);
+
+      // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
+      /*
+        var apiKey = "myApiKeyXXXX123456789";
+        $('#input_apiKey').val(apiKey);
+        addApiKeyAuthorization();
+      */
+
+      window.swaggerUi.load();
+
+      function log() {
+        if ('console' in window) {
+          console.log.apply(console, arguments);
+        }
+      }
+  });
+  </script>
+</head>
+
+<body class="swagger-section">
+<div id="header">
+  <div class="swagger-ui-wrap">
+    <a id="logo" href="http://swagger.io/">swagger</a>
+    <form id="api_selector">
+      <div class="input"><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"></div>
+      <div class="input"><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"></div>
+      <div class="input"><a id="explore" href="http://localhost:8081/swagger/ui/index#">Explore</a></div>
+    </form>
+  </div>
+</div>
+
+<div id="message-bar" class="swagger-ui-wrap message-success"></div>
+<div id="swagger-ui-container" class="swagger-ui-wrap"><div class="info" id="api_info">
+  <div class="info_title">PlugAPI</div>
+  <div class="info_description markdown"></div>
+  
+  
+  
+  
+  
+</div>
+<div class="container" id="resources_container">
+  <ul id="resources"><li id="resource_CurrentRun" class="resource"><div class="heading">
+  <h2>
+    <a href="http://localhost:8081/swagger/ui/index#!/CurrentRun" class="toggleEndpointList" data-id="CurrentRun">CurrentRun</a> 
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#!/CurrentRun" id="endpointListTogger_CurrentRun" class="toggleEndpointList" data-id="CurrentRun">Show/Hide</a>
+    </li>
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#" class="collapseResource" data-id="CurrentRun">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#" class="expandResource" data-id="CurrentRun">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="CurrentRun_endpoint_list" style="display:none">
+
+<li class="endpoint">
+  <ul class="operations">
+    <li class="get operation" id="CurrentRun_CurrentRun_Get">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="http://localhost:8081/swagger/ui/index#!/CurrentRun/CurrentRun_Get" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="http://localhost:8081/swagger/ui/index#!/CurrentRun/CurrentRun_Get" class="toggleOperation ">/api/CurrentRun</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="http://localhost:8081/swagger/ui/index#!/CurrentRun/CurrentRun_Get" class="toggleOperation"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="CurrentRun_CurrentRun_Get_content" style="display:none">
+
+        
+          <h4>Response Class (Status 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">CurrentRun {</span><div><span class="propName ">LastToogleTime</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">CurrentValue</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">PowerValue</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">EnergyValue</span> (<span class="propType">Energy</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span><br><span class="strong">Energy {</span><div><span class="propName ">Day</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">Week</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">Month</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{
+  "<span class="attribute">LastToogleTime</span>": <span class="value"><span class="string">"2017-11-04T18:16:34.471Z"</span></span>,
+  "<span class="attribute">CurrentValue</span>": <span class="value"><span class="number">0</span></span>,
+  "<span class="attribute">PowerValue</span>": <span class="value"><span class="number">0</span></span>,
+  "<span class="attribute">EnergyValue</span>": <span class="value">{
+    "<span class="attribute">Day</span>": <span class="value"><span class="number">0</span></span>,
+    "<span class="attribute">Week</span>": <span class="value"><span class="number">0</span></span>,
+    "<span class="attribute">Month</span>": <span class="value"><span class="number">0</span>
+  }</span>
+}</span></code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label for="responseContentType">Response Content Type</label>
+<select name="responseContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div class="sandbox_header">
+            <input class="submit" type="button" value="Try it out!">
+            <a href="http://localhost:8081/swagger/ui/index#" class="response_hider" style="display:none">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Request URL</h4>
+          <div class="block request_url"></div>
+          <h4>Response Body</h4>
+          <div class="block response_body"></div>
+          <h4>Response Code</h4>
+          <div class="block response_code"></div>
+          <h4>Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li><li id="resource_DeviceConfig" class="resource"><div class="heading">
+  <h2>
+    <a href="http://localhost:8081/swagger/ui/index#!/DeviceConfig" class="toggleEndpointList" data-id="DeviceConfig">DeviceConfig</a> 
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#!/DeviceConfig" id="endpointListTogger_DeviceConfig" class="toggleEndpointList" data-id="DeviceConfig">Show/Hide</a>
+    </li>
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#" class="collapseResource" data-id="DeviceConfig">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#" class="expandResource" data-id="DeviceConfig">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="DeviceConfig_endpoint_list" style="display:none">
+
+<li class="endpoint">
+  <ul class="operations">
+    <li class="get operation" id="DeviceConfig_DeviceConfig_Get">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="http://localhost:8081/swagger/ui/index#!/DeviceConfig/DeviceConfig_Get" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="http://localhost:8081/swagger/ui/index#!/DeviceConfig/DeviceConfig_Get" class="toggleOperation ">/api/DeviceConfig</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="http://localhost:8081/swagger/ui/index#!/DeviceConfig/DeviceConfig_Get" class="toggleOperation"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="DeviceConfig_DeviceConfig_Get_content" style="display:none">
+
+        
+          <h4>Response Class (Status 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">DeviceConfig {</span><div><span class="propName ">Name</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">Model</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">MAC</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">IsMailingOn</span> (<span class="propType">boolean</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">IsScheduleOn</span> (<span class="propType">boolean</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{
+  "<span class="attribute">Name</span>": <span class="value"><span class="string">"string"</span></span>,
+  "<span class="attribute">Model</span>": <span class="value"><span class="string">"string"</span></span>,
+  "<span class="attribute">MAC</span>": <span class="value"><span class="string">"string"</span></span>,
+  "<span class="attribute">IsMailingOn</span>": <span class="value"><span class="literal">true</span></span>,
+  "<span class="attribute">IsScheduleOn</span>": <span class="value"><span class="literal">true</span>
+}</span></code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label for="responseContentType">Response Content Type</label>
+<select name="responseContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div class="sandbox_header">
+            <input class="submit" type="button" value="Try it out!">
+            <a href="http://localhost:8081/swagger/ui/index#" class="response_hider" style="display:none">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Request URL</h4>
+          <div class="block request_url"></div>
+          <h4>Response Body</h4>
+          <div class="block response_body"></div>
+          <h4>Response Code</h4>
+          <div class="block response_code"></div>
+          <h4>Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="post operation" id="DeviceConfig_DeviceConfig_ChangeName">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="http://localhost:8081/swagger/ui/index#!/DeviceConfig/DeviceConfig_ChangeName" class="toggleOperation">post</a>
+          </span>
+          <span class="path">
+          <a href="http://localhost:8081/swagger/ui/index#!/DeviceConfig/DeviceConfig_ChangeName" class="toggleOperation ">/api/DeviceConfig</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="http://localhost:8081/swagger/ui/index#!/DeviceConfig/DeviceConfig_ChangeName" class="toggleOperation"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="DeviceConfig_DeviceConfig_ChangeName_content" style="display:none">
+
+        
+          <h4>Response Class (Status 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Object {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label for="responseContentType">Response Content Type</label>
+<select name="responseContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4>Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px">Parameter</th>
+            <th style="width: 310px; max-width: 310px">Value</th>
+            <th style="width: 200px; max-width: 200px">Description</th>
+            <th style="width: 100px; max-width: 100px">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code required">name</td>
+<td>
+<input class="parameter required" minlength="1" name="name" placeholder="(required)" type="text" value=""></td>
+<td>
+	<strong><span class="markdown"></span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">string</span></td>
+</tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" type="button" value="Try it out!">
+            <a href="http://localhost:8081/swagger/ui/index#" class="response_hider" style="display:none">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Request URL</h4>
+          <div class="block request_url"></div>
+          <h4>Response Body</h4>
+          <div class="block response_body"></div>
+          <h4>Response Code</h4>
+          <div class="block response_code"></div>
+          <h4>Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li><li id="resource_Schedule" class="resource"><div class="heading">
+  <h2>
+    <a href="http://localhost:8081/swagger/ui/index#!/Schedule" class="toggleEndpointList" data-id="Schedule">Schedule</a> 
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#!/Schedule" id="endpointListTogger_Schedule" class="toggleEndpointList" data-id="Schedule">Show/Hide</a>
+    </li>
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#" class="collapseResource" data-id="Schedule">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#" class="expandResource" data-id="Schedule">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="Schedule_endpoint_list" style="display:none">
+
+<li class="endpoint">
+  <ul class="operations">
+    <li class="get operation" id="Schedule_Schedule_Get">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Get" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Get" class="toggleOperation ">/api/Schedule</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Get" class="toggleOperation"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="Schedule_Schedule_Get_content" style="display:none">
+
+        
+          <h4>Response Class (Status 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model [</span><div>Schedule</div><span class="strong">]</span><br><span class="strong">Schedule {</span><div><span class="propName ">DayOfWeek</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">HourStart</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">HourEnd</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">IsEnabled</span> (<span class="propType">boolean</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">[
+  {
+    "<span class="attribute">DayOfWeek</span>": <span class="value"><span class="number">0</span></span>,
+    "<span class="attribute">HourStart</span>": <span class="value"><span class="string">"string"</span></span>,
+    "<span class="attribute">HourEnd</span>": <span class="value"><span class="string">"string"</span></span>,
+    "<span class="attribute">IsEnabled</span>": <span class="value"><span class="literal">true</span>
+  }</span>
+]</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label for="responseContentType">Response Content Type</label>
+<select name="responseContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div class="sandbox_header">
+            <input class="submit" type="button" value="Try it out!">
+            <a href="http://localhost:8081/swagger/ui/index#" class="response_hider" style="display:none">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Request URL</h4>
+          <div class="block request_url"></div>
+          <h4>Response Body</h4>
+          <div class="block response_body"></div>
+          <h4>Response Code</h4>
+          <div class="block response_code"></div>
+          <h4>Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="post operation" id="Schedule_Schedule_Post">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Post" class="toggleOperation">post</a>
+          </span>
+          <span class="path">
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Post" class="toggleOperation ">/api/Schedule</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Post" class="toggleOperation"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="Schedule_Schedule_Post_content" style="display:none">
+
+        
+          <h4>Response Class (Status 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model [</span><div>Schedule</div><span class="strong">]</span><br><span class="strong">Schedule {</span><div><span class="propName ">DayOfWeek</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">HourStart</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">HourEnd</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">IsEnabled</span> (<span class="propType">boolean</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">[
+  {
+    "<span class="attribute">DayOfWeek</span>": <span class="value"><span class="number">0</span></span>,
+    "<span class="attribute">HourStart</span>": <span class="value"><span class="string">"string"</span></span>,
+    "<span class="attribute">HourEnd</span>": <span class="value"><span class="string">"string"</span></span>,
+    "<span class="attribute">IsEnabled</span>": <span class="value"><span class="literal">true</span>
+  }</span>
+]</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label for="responseContentType">Response Content Type</label>
+<select name="responseContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4>Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px">Parameter</th>
+            <th style="width: 310px; max-width: 310px">Value</th>
+            <th style="width: 200px; max-width: 200px">Description</th>
+            <th style="width: 100px; max-width: 100px">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code required">jsonObject</td>
+<td>
+				<textarea class="body-textarea required" placeholder="(required)" name="jsonObject"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="parameterContentType">Parameter content type:</label>
+<select name="parameterContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+  <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+</select>
+</div></div>
+</td>
+<td>
+	<strong><span class="markdown"></span></strong>
+</td>
+<td>body</td>
+<td><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Object {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice">Click to set as parameter value</small>
+  </div>
+</div>
+
+</div></div></div></span></td>
+</tr><tr><td class="code">overridden</td>
+<td>
+  <select class="parameter" name="overridden">
+          <option selected="" value=""></option>
+        <option value="true">true</option>
+        <option value="false">false</option>
+  </select>
+</td>
+<td class="markdown"></td>
+<td>query</td>
+<td><span class="model-signature">boolean</span></td>
+</tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" type="button" value="Try it out!">
+            <a href="http://localhost:8081/swagger/ui/index#" class="response_hider" style="display:none">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Request URL</h4>
+          <div class="block request_url"></div>
+          <h4>Response Body</h4>
+          <div class="block response_body"></div>
+          <h4>Response Code</h4>
+          <div class="block response_code"></div>
+          <h4>Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="put operation" id="Schedule_Schedule_Put">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Put" class="toggleOperation">put</a>
+          </span>
+          <span class="path">
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Put" class="toggleOperation ">/api/Schedule</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="http://localhost:8081/swagger/ui/index#!/Schedule/Schedule_Put" class="toggleOperation"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="Schedule_Schedule_Put_content" style="display:none">
+
+        
+          <h4>Response Class (Status 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model [</span><div>Schedule</div><span class="strong">]</span><br><span class="strong">Schedule {</span><div><span class="propName ">DayOfWeek</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">HourStart</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">HourEnd</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">IsEnabled</span> (<span class="propType">boolean</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">[
+  {
+    "<span class="attribute">DayOfWeek</span>": <span class="value"><span class="number">0</span></span>,
+    "<span class="attribute">HourStart</span>": <span class="value"><span class="string">"string"</span></span>,
+    "<span class="attribute">HourEnd</span>": <span class="value"><span class="string">"string"</span></span>,
+    "<span class="attribute">IsEnabled</span>": <span class="value"><span class="literal">true</span>
+  }</span>
+]</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label for="responseContentType">Response Content Type</label>
+<select name="responseContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4>Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px">Parameter</th>
+            <th style="width: 310px; max-width: 310px">Value</th>
+            <th style="width: 200px; max-width: 200px">Description</th>
+            <th style="width: 100px; max-width: 100px">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code required">jsonObject</td>
+<td>
+				<textarea class="body-textarea required" placeholder="(required)" name="jsonObject"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="parameterContentType">Parameter content type:</label>
+<select name="parameterContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+  <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+</select>
+</div></div>
+</td>
+<td>
+	<strong><span class="markdown"></span></strong>
+</td>
+<td>body</td>
+<td><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Object {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice">Click to set as parameter value</small>
+  </div>
+</div>
+
+</div></div></div></span></td>
+</tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" type="button" value="Try it out!">
+            <a href="http://localhost:8081/swagger/ui/index#" class="response_hider" style="display:none">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Request URL</h4>
+          <div class="block request_url"></div>
+          <h4>Response Body</h4>
+          <div class="block response_body"></div>
+          <h4>Response Code</h4>
+          <div class="block response_code"></div>
+          <h4>Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li><li id="resource_State" class="resource"><div class="heading">
+  <h2>
+    <a href="http://localhost:8081/swagger/ui/index#!/State" class="toggleEndpointList" data-id="State">State</a> 
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#!/State" id="endpointListTogger_State" class="toggleEndpointList" data-id="State">Show/Hide</a>
+    </li>
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#" class="collapseResource" data-id="State">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="http://localhost:8081/swagger/ui/index#" class="expandResource" data-id="State">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="State_endpoint_list" style="display:none">
+
+<li class="endpoint">
+  <ul class="operations">
+    <li class="get operation" id="State_State_Get">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="http://localhost:8081/swagger/ui/index#!/State/State_Get" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="http://localhost:8081/swagger/ui/index#!/State/State_Get" class="toggleOperation ">/api/State</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="http://localhost:8081/swagger/ui/index#!/State/State_Get" class="toggleOperation"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="State_State_Get_content" style="display:none">
+
+        
+          <h4>Response Class (Status 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">State {</span><div><span class="propName ">IsOn</span> (<span class="propType">boolean</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{
+  "<span class="attribute">IsOn</span>": <span class="value"><span class="literal">true</span>
+}</span></code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label for="responseContentType">Response Content Type</label>
+<select name="responseContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div class="sandbox_header">
+            <input class="submit" type="button" value="Try it out!">
+            <a href="http://localhost:8081/swagger/ui/index#" class="response_hider" style="display:none">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Request URL</h4>
+          <div class="block request_url"></div>
+          <h4>Response Body</h4>
+          <div class="block response_body"></div>
+          <h4>Response Code</h4>
+          <div class="block response_code"></div>
+          <h4>Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="post operation" id="State_State_Post">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="http://localhost:8081/swagger/ui/index#!/State/State_Post" class="toggleOperation">post</a>
+          </span>
+          <span class="path">
+          <a href="http://localhost:8081/swagger/ui/index#!/State/State_Post" class="toggleOperation ">/api/State</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="http://localhost:8081/swagger/ui/index#!/State/State_Post" class="toggleOperation"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="State_State_Post_content" style="display:none">
+
+        
+          <h4>Response Class (Status 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="http://localhost:8081/swagger/ui/index#">Model</a></li>
+  <li><a class="snippet-link selected" href="http://localhost:8081/swagger/ui/index#">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">State {</span><div><span class="propName ">IsOn</span> (<span class="propType">boolean</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{
+  "<span class="attribute">IsOn</span>": <span class="value"><span class="literal">true</span>
+}</span></code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label for="responseContentType">Response Content Type</label>
+<select name="responseContentType">
+  <option value="application/json">application/json</option>
+  <option value="text/json">text/json</option>
+  <option value="application/xml">application/xml</option>
+  <option value="text/xml">text/xml</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4>Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px">Parameter</th>
+            <th style="width: 310px; max-width: 310px">Value</th>
+            <th style="width: 200px; max-width: 200px">Description</th>
+            <th style="width: 100px; max-width: 100px">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code required">isOn</td>
+<td>
+  <select class="parameter required" name="isOn">
+        <option value="true">true</option>
+        <option value="false">false</option>
+  </select>
+</td>
+<td class="markdown"><p><strong></strong></p>
+</td>
+<td>query</td>
+<td><span class="model-signature">boolean</span></td>
+</tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" type="button" value="Try it out!">
+            <a href="http://localhost:8081/swagger/ui/index#" class="response_hider" style="display:none">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Request URL</h4>
+          <div class="block request_url"></div>
+          <h4>Response Body</h4>
+          <div class="block response_body"></div>
+          <h4>Response Code</h4>
+          <div class="block response_code"></div>
+          <h4>Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li></ul>
+
+  <div class="footer">
+    <h4 style="color: #999">[ <span style="font-variant: small-caps">base url</span>: 
+    , <span style="font-variant: small-caps">api version</span>: v1
+    ]
+    </h4>
+    </div>
+</div>
+</div>
+
+
+</body></html>
