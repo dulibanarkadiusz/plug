@@ -21,9 +21,14 @@ app.config(function($stateProvider, $urlRouterProvider){
 app.filter('dayOfWeek', function() {
     return function(day) {
         switch(day){
-        	case 0: return "Niedziela";
-        	case 4: return "Czwartek";
-        	default: return "Żodyn";
+            case 0: return "Niedziela";
+            case 1: return "Poniedziałek";
+            case 2: return "Wtorek";
+            case 3: return "Środa";
+            case 4: return "Czwartek";
+            case 5: return "Piątek";
+            case 6: return "Sobota";
+        	default: return "?";
         }
     };
 });

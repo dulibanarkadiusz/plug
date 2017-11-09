@@ -39,12 +39,43 @@
 			<th>Stop</th>
 			</tr>
 			<tr ng-repeat="x in records">
-			<td> {{x.DayOfWeek}} </td>
+			<td> {{x.DayOfWeek | dayOfWeek}} </td>
 			<td> {{x.HourStart}} </td>
 			<td> {{x.HourEnd}} </td>
 			</tr>
 			</table>
 		</div>
+		
+		<div id="addRule-container">
+		
+			<div class="row">
+				<div class="col-sm-3">Dzień tygodnia:</div>
+				<div class="col-sm-3">Start:</div>
+				<div class="col-sm-3">Stop:</div>
+			</div>
+		
+			<div class="row">
+				<div  class="col-sm-3">
+					<select>
+					  <option value="1">Poniedziałek</option>
+					  <option value="2">Wtorek</option>
+					  <option value="3">Środa</option>
+					  <option value="4">Czwartek</option>
+					  <option value="5">Piątek</option>
+					  <option value="6">Sobota</option>
+					  <option value="0">Niedziela</option>
+					</select>
+				</div>
+				<div  class="col-sm-3">
+					<input type="time">
+				</div>
+				<div  class="col-sm-3">
+					<input type="time">
+				</div>
+				<div class="col-sm-3">
+					<button class="btn btn-success btn-md" ng-click="saveRule()">Zapisz</button>
+				</div>
+			</div>
 	</div>
 </div>
 
