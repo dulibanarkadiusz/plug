@@ -3,4 +3,10 @@ var app = angular.module("plugApp", [
 		"plugAppRouter",
 		"plugAppMainCtrl",
 		"ui.bootstrap"
-	]);
+]);
+
+app.filter('dayNameFilter', function () {
+    return function (day) {
+        return "x";
+    }
+});

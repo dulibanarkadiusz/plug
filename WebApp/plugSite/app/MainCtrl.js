@@ -1,5 +1,5 @@
-var apiUrl = "http://localhost:8081/api/";
-angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $http, amMoment, $timeout, $uibModal){
+var apiUrl = "http://192.168.43.99:8081/api/";
+angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $http, $filter, amMoment, $timeout, $uibModal){
 	$scope.header = "test";
 	$scope.device = {};
 	$scope.indicators = {};
@@ -24,6 +24,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $h
 		$scope.getStatus();
 		$scope.getIndicators();
 		$scope.getDeviceInfo();
+		$scope.getSchedule();
 
 		$timeout($scope.tryCancelInit, 100);
 	}
@@ -65,6 +66,19 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $h
 	  	}, function errorCallback(response) {
 	  		$scope.httpError();
 		});
+	}
+
+	$scope.getSchedule = function () {
+	    $http({
+	        method: 'GET',
+	        url: apiUrl + 'Schedule'
+	    }).then(function successCallback(response) {
+	        $scope.records = response.data;
+	        $scope.httpSuccess();
+
+	    }, function errorCallback(response) {
+	        $scope.httpError();
+	    });
 	}
 
 	$scope.switchStatus = function(){

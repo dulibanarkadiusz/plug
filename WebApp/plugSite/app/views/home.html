@@ -32,7 +32,18 @@
 		</div>
 
 		<div id="schedule-container">
-			
+			<table class="table">
+			<tr>
+			<th>Dzień tygodnia</th>
+			<th>Start</th>
+			<th>Stop</th>
+			</tr>
+			<tr ng-repeat="x in records">
+			<td> {{x.DayOfWeek}} </td>
+			<td> {{x.HourStart}} </td>
+			<td> {{x.HourEnd}} </td>
+			</tr>
+			</table>
 		</div>
 	</div>
 </div>
