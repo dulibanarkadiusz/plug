@@ -1,6 +1,5 @@
 var apiUrl = "http://192.168.43.99:8081/api/";
-angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $http, $filter, amMoment, $timeout, $uibModal){
-	$scope.header = "test";
+angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $state, $http, amMoment, $timeout, $uibModal){
 	$scope.device = {};
 	$scope.indicators = {};
 	$scope.errorString = "";
