@@ -120,6 +120,13 @@ footer{
 	padding: 2px;
 }
 
+.fa-trash{
+	padding-left: 12px;
+}
+
+select{
+	height: 26px;
+}
 
 .btn-save{
     height: 28px;
@@ -269,6 +276,10 @@ input:checked + .slider:before {
 
 .addSchedule-container .row div{
 	text-align: left;
+}
+
+#addRule-container {
+	padding-bottom: 15px;
 }
 
 .table .col-actions{

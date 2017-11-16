@@ -110,13 +110,14 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 		});
 	}
 	
-	$scope.deleteRule = function(){
+	$scope.deleteRule = function(dayOfWeek, hourStart, hourStop){
 		$scope.isDataProccessing = true;
 		$http({
 			method: 'PUT',
-		 	url: apiUrl + 'Schedule' 
+		 	url: apiUrl + 'Schedule' ,
+			data: {"DayOfWeek": dayOfWeek, "HourStart": hourStart, "HourEnd": hourStop, "IsEnabled": true}
 		}).then(function successCallback(response) {
-		    $scope.state = response.data[0];
+		    $scope.records = response.data;
 		    $scope.isDataProccessing = false;
 	  	}, function errorCallback(response) {
 		    $scope.httpError();

@@ -37,14 +37,14 @@
 			<th>Dzień tygodnia</th>
 			<th>Start</th>
 			<th>Stop</th>
-			<th></th>
+			<th>Usuń</th>
 			</tr>
 			<tr ng-repeat="x in records">
 			<td> {{x.DayOfWeek | dayOfWeek}} </td>
 			<td> {{x.HourStart}} </td>
 			<td> {{x.HourEnd}} </td>
 			<td> 
-			<button class="btn btn-success btn-md btn-save" ng-click="deleteRule()">Delete</button>
+			<i class="fa fa-trash" aria-hidden="true"  ng-click="deleteRule(x.DayOfWeek, x.HourStart, x.HourStop)"></i>
 			</td>
 			</tr>
 			</table>
