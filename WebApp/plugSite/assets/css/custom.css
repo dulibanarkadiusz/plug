@@ -102,12 +102,6 @@ body {
     font-size: 24px;
 }
 
-.plug-header .plug-name button{
-    height: 28px;
-    font-size: 13px;
-    line-height: 14px;
-}
-
 .plug-header .plug-model{
 	height: 20px;
 	line-height: 20px;
@@ -124,6 +118,13 @@ footer{
 	color: #80878e;
 	margin: 10px 15px;
 	padding: 2px;
+}
+
+
+.btn-save{
+    height: 28px;
+    font-size: 13px;
+    line-height: 14px;
 }
 
 #status-container{

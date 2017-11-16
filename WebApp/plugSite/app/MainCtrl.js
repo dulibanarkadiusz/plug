@@ -24,6 +24,8 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 		$scope.getIndicators();
 		$scope.getDeviceInfo();
 		$scope.getSchedule();
+		
+		$scope.rule = {};
 
 		$timeout($scope.tryCancelInit, 100);
 	}
@@ -89,6 +91,33 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 		    $scope.state = response.data[0];
 		    $scope.isDataProccessing = false;
 		    $scope.getIndicators();
+	  	}, function errorCallback(response) {
+		    $scope.httpError();
+		});
+	}
+	
+	$scope.saveRule = function(){
+		$scope.isDataProccessing = true;
+		$http({
+			method: 'POST',
+		 	url: apiUrl + 'Schedule' ,
+			data: angular.toJson(JSON.stringify($scope.rule))
+		}).then(function successCallback(response) {
+		    $scope.records = response.data;
+		    $scope.isDataProccessing = false;
+	  	}, function errorCallback(response) {
+		    $scope.httpError();
+		});
+	}
+	
+	$scope.deleteRule = function(){
+		$scope.isDataProccessing = true;
+		$http({
+			method: 'PUT',
+		 	url: apiUrl + 'Schedule' 
+		}).then(function successCallback(response) {
+		    $scope.state = response.data[0];
+		    $scope.isDataProccessing = false;
 	  	}, function errorCallback(response) {
 		    $scope.httpError();
 		});
