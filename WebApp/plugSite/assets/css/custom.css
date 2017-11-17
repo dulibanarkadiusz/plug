@@ -261,6 +261,10 @@ input:checked + .slider:before {
 
 /* ------------------------- */
 
+.message{
+	color: red;
+}
+
 #schedule-container{
 	margin-top: 15px;
 	padding: 15px;
@@ -285,3 +289,13 @@ input:checked + .slider:before {
 .table .col-actions{
 	padding: 6px;
 }
+
+#tableCost{
+	margin: 40px 0;
+}
+
+#tableCost td{
+	width: 33.33% !important;
+    padding: 15px;
+}
+

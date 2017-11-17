@@ -2,11 +2,6 @@ var app = angular.module("plugApp", [
 		"angularMoment",
 		"plugAppRouter",
 		"plugAppMainCtrl",
+		"plugAppPriceCtrl",
 		"ui.bootstrap"
 ]);
-
-app.filter('dayNameFilter', function () {
-    return function (day) {
-        return "x";
-    }
-});

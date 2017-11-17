@@ -1,0 +1,52 @@
+<div class="wrapper" ng-controller="priceCtrl" ng-init="getEnergy()">
+	<div id="status-container">
+		<div class="blink error-box">{{errorString}}</div>
+		<div class="spinner" ng-show="isDataProccessing">
+			<span class="fa fa-cog fa-spin fa-3x fa-fw"></span>
+		</div>
+	</div>
+	<div class="box main" style="padding: 15px">
+		
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<div class="form-row">
+			        <label for="price">Cena 1kWh:</label>
+				    <div class="input-group"> 
+				        <input id="price" data-number-to-fixed="2" type="number" min="0" step="0.01" data-number-stepfactor="100" class="form-control" name="price" ng-model="price" ng-change="calc()">
+				        <span class="input-group-addon">zł</span>
+				    </div>
+				    <span class="message">{{message}}</span>
+		        </div>
+			</div>
+		</div>
+
+	  	<table class="table table-striped" id="tableCost">
+	    	<thead>
+	      		<tr>
+	        		<th></th>
+	        		<th>Zużycie</th>
+	        		<th>Koszt</th>
+	      		</tr>
+	    	</thead>
+	    	<tbody>
+	      		<tr>
+	        		<td>Dzisiaj</td>
+	        		<td>{{energy.Day}} kWh</td>
+	        		<td>{{costs.Day}} zł</td>
+	      		</tr>
+	      		<tr>
+	        		<td>Ostatni tydzień</td>
+	        		<td>{{energy.Week}} kWh</td>
+	        		<td>{{costs.Week}} zł</td>
+	      		</tr>
+	      		<tr>
+	        		<td>Ostatni miesiąc</td>
+	        		<td>{{energy.Month}} kWh</td>
+	        		<td>{{costs.Month}} zł</td>
+	      		</tr>
+	    	</tbody>
+	  	</table>
+
+	</div>
+</div>
