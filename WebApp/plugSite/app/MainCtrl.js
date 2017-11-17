@@ -114,6 +114,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 		}).then(function successCallback(response) {
 		    $scope.records = response.data;
 		    $scope.isDataProccessing = false;
+		    $scope.scheduleEditorEnabled = false;
 	  	}, function errorCallback(response) {
 		    $scope.httpError();
 		});
@@ -157,6 +158,10 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 
 	$scope.enableEdit = function(){
 		$scope.editEnabled = true;
+	}
+
+	$scope.enableAddSchedule = function(){
+		$scope.scheduleEditorEnabled = true;
 	}
 
 	$scope.httpSuccess = function(){

@@ -121,11 +121,15 @@ footer{
 }
 
 .fa-trash{
-	padding-left: 12px;
+    padding: 0 5px;
 }
 
 select{
 	height: 26px;
+}
+
+.btn-remove{
+	margin-top: -4px;
 }
 
 .btn-save{

@@ -6,6 +6,61 @@
 		</div>
 	</div>
 
+		<div class="row">
+		<div class="col-sm-6 col-md-3">
+			<div class="box indicator indicatorLastToggle red row" data-placement="bottom" data-toggle="tooltip-indicator" title="{{indicators.LastToogleTime | amDateFormat: 'dddd, D MMMM YYYY H:mm:ss'}}">
+				<div class="col-xs-3 icon">
+					<div class="icon">
+						<i class="fa fa-power-off"></i>
+					</div>
+				</div>
+				<div class="col-xs-9 text-right value-box">
+					<div class="value" am-time-ago="indicators.LastToogleTime"> </div>
+					<div class="title">Ostatnia zmiana stanu</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-3">
+			<div class="box indicator blue row">
+				<div class="col-xs-2">
+					<div class="icon">
+						<i class="fa fa-download"></i>
+					</div>
+				</div>
+				<div class="col-xs-10 text-right value-box">
+					<div class="value">{{indicators.PowerValue}} W </div>
+					<div class="title">Pobór prądu</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-3">
+			<div class="box indicator orange row">
+				<div class="col-xs-2">
+					<div class="icon">
+						<i class="fa fa-bolt"></i>
+					</div>
+				</div>
+				<div class="col-xs-10 text-right value-box">
+					<div class="value">{{indicators.CurrentValue}} A </div>
+					<div class="title">Natężenie prądu</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-3">
+			<div class="box indicator green row">
+				<div class="col-xs-2">
+					<div class="icon">
+						<i class="fa fa-line-chart"></i>
+					</div>
+				</div>
+				<div class="col-xs-10 text-right value-box">
+					<div class="value">{{indicators.EnergyValue.Day}} kWh </div>
+					<div class="title">Zużycie dziś</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="box main">
 		<div class="plug-header">
 			<div class="plug-icon"><i class="fa fa-plug"></i></div>
@@ -32,35 +87,27 @@
 		</div>
 
 		<div id="schedule-container">
-			<table class="table">
-			<tr>
-			<th>Dzień tygodnia</th>
-			<th>Start</th>
-			<th>Stop</th>
-			<th>Usuń</th>
-			</tr>
-			<tr ng-repeat="x in records">
-			<td> {{x.DayOfWeek | dayOfWeek}} </td>
-			<td> {{x.HourStart}} </td>
-			<td> {{x.HourEnd}} </td>
-			<td> 
-			<i class="fa fa-trash" aria-hidden="true"  ng-click="deleteRule(x.DayOfWeek, x.HourStart, x.HourEnd)"></i>
-			</td>
-			</tr>
-			</table>
-		</div>
-		
-		<div id="addRule-container">
-		
+			<div class="schedule-panel">
+				<div class="col-md-4">
+					<h2>Harmonogram</h2>
+				</div>
+				<div class="col-md-8 addSchedule-container">
+					<div class="" ng-hide="scheduleEditorEnabled" ng-click="enableAddSchedule()">
+						<button class="btn btn-success btn-md" data-toggle="tooltip" data-placement="left" title="Utwórz nowe, zaplanowane i powtarzalne zdarzenie">Dodaj nowe zdarzenie</button>
+					</div>
+					<div class="row" ng-show="scheduleEditorEnabled">
+								<div id="addRule-container">
+			
 			<div class="row">
-				<div class="col-sm-3">Dzień tygodnia:</div>
+				<div class="col-sm-4">Dzień tygodnia:</div>
 				<div class="col-sm-3">Start:</div>
-				<div class="col-sm-3">Stop:</div>
+				<div class="col-sm-3">Koniec:</div>
+				<div class="col-sm-2"></div>
 			</div>
 		
 			<div class="row">
-				<div  class="col-sm-3">
-					<select ng-model="rule.DayOfWeek">
+				<div class="col-sm-4">
+					<select class="form-control" ng-model="rule.DayOfWeek">
 					  <option value="1">Poniedziałek</option>
 					  <option value="2">Wtorek</option>
 					  <option value="3">Środa</option>
@@ -71,19 +118,45 @@
 					</select>
 				</div>
 				<div  class="col-sm-3" >
-					<input ng-model="rule.HourStart" type="time">
+					<input class="form-control" ng-model="rule.HourStart" type="time">
 				</div>
 				<div  class="col-sm-3" >
-					<input ng-model="rule.HourEnd" type="time">
+					<input class="form-control" ng-model="rule.HourEnd" type="time">
 				</div>
-				<div class="col-sm-3">
-					<button class="btn btn-success btn-md btn-save" ng-click="saveRule()">Zapisz</button>
+				<div class="col-sm-2">
+					<button class="btn btn-success btn-md " ng-click="saveRule()">Zapisz</button>
 				</div>
 			</div>
+		</div>
+					</div>
+				</div>
+			</div>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Dzień tygodnia</th>
+						<th>Start</th>
+						<th>Koniec</th>
+						<th>Usuń</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="x in records">
+						<td> {{x.DayOfWeek | dayOfWeek}} </td>
+						<td> {{x.HourStart}} </td>
+						<td> {{x.HourEnd}} </td>
+						<td> 
+							<button class="btn btn-xs btn-default btn-remove" ng-click="deleteRule(x.DayOfWeek, x.HourStart, x.HourEnd)">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
-
-
 
 <script>
   $(function(){
