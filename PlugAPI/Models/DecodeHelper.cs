@@ -19,6 +19,8 @@ namespace PlugAPI.Models
 
         public static string EncodeHour(string hour)
         {
+            var d = DateTime.Parse(hour);
+            hour = d.ToString("HH:mm");
             var parts = hour.Split(':');
 
             return _Template[int.Parse(parts[0])] + "" + _Template[int.Parse(parts[1])];

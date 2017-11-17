@@ -58,7 +58,7 @@ namespace PlugAPI.Controllers
                         scheduleList.Add(DecodeHelper.DecodeString(i, entry));
                 }
             }
-
+            
             var json = JsonConvert.SerializeObject(scheduleList, Newtonsoft.Json.Formatting.None);
             var response = Request.CreateResponse(HttpStatusCode.OK);
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -67,10 +67,11 @@ namespace PlugAPI.Controllers
         }
 
         [ResponseType(typeof(IEnumerable<Schedule>))]
-        [HttpPost]
-        public HttpResponseMessage Post([FromBody] object jsonObject, bool overridden = true)
+        public HttpResponseMessage Post(HttpRequestMessage request)
         {
-            string xxx = jsonObject.ToString();
+            var content = request.Content;
+            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(content.ReadAsStringAsync().Result);
+
             XDocument msgToSend = XDocument.Parse(@"<?xml version=""1.0"" encoding=""UTF8""?>
                                                    <SMARTPLUG id=""edimax"">
                                                       <CMD id=""get"">
@@ -88,8 +89,9 @@ namespace PlugAPI.Controllers
             }
             msgToSend.Descendants("CMD").First().Attribute("id").Value = "setup";
 
-            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(jsonObject.ToString());
-            for (int i=0; i<=6; i++)
+            var overridden = false;
+            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(data["schedule"]);
+            for (int i = 0; i <= 6; i++)
             {
                 var list = scheduleList.Where(x => x.DayOfWeek == i).ToList();
                 var decodedListStr = DecodeHelper.EncodeSchedule(list);
@@ -118,15 +120,20 @@ namespace PlugAPI.Controllers
             return Get();
         }
 
+
+
         /// <summary>
         /// Testowa metoda 
         /// </summary>
         /// <param name="jsonObject"></param>
         /// <returns></returns>
         [ResponseType(typeof(IEnumerable<Schedule>))]
-        [HttpPut]
-        public HttpResponseMessage Put([FromBody] object jsonObject)
+        [HttpDelete]
+        public HttpResponseMessage Delete(HttpRequestMessage request)
         {
+            var content = request.Content;
+            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(content.ReadAsStringAsync().Result);
+
             XDocument msgToSend = XDocument.Parse(@"<?xml version=""1.0"" encoding=""UTF8""?>
                                                    <SMARTPLUG id=""edimax"">
                                                       <CMD id=""get"">
@@ -145,7 +152,7 @@ namespace PlugAPI.Controllers
             msgToSend.Descendants("CMD").First().Attribute("id").Value = "setup";
 
 
-            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(jsonObject.ToString());
+            var scheduleList = JsonConvert.DeserializeObject<List<Schedule>>(data["schedule"]);
             var currentValue = msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value;
 
             string decodedVal;
