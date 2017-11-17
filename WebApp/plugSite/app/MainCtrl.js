@@ -98,10 +98,19 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 	
 	$scope.saveRule = function(){
 		$scope.isDataProccessing = true;
+		$scope.rule.IsEnabled = true;
+
+		$scope.ruleList = [];
+		$scope.ruleList.push($scope.rule);
+		console.log(angular.toJson($scope.ruleList));
+
 		$http({
 			method: 'POST',
-		 	url: apiUrl + 'Schedule' ,
-			data: angular.toJson(JSON.stringify($scope.rule))
+		 	url: apiUrl + 'Schedule',
+			data: {
+				schedule: angular.toJson($scope.ruleList),
+				overridden: false
+				}
 		}).then(function successCallback(response) {
 		    $scope.records = response.data;
 		    $scope.isDataProccessing = false;
@@ -111,11 +120,13 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 	}
 	
 	$scope.deleteRule = function(dayOfWeek, hourStart, hourStop){
+		var deleteList = [];
+		deleteList.push({"DayOfWeek": dayOfWeek, "HourStart": hourStart, "HourEnd": hourStop, "IsEnabled": true});
 		$scope.isDataProccessing = true;
 		$http({
-			method: 'PUT',
+			method: 'DELETE',
 		 	url: apiUrl + 'Schedule' ,
-			data: {"DayOfWeek": dayOfWeek, "HourStart": hourStart, "HourEnd": hourStop, "IsEnabled": true}
+			data: {schedule: angular.toJson(deleteList)}
 		}).then(function successCallback(response) {
 		    $scope.records = response.data;
 		    $scope.isDataProccessing = false;

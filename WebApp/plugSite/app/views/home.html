@@ -44,7 +44,7 @@
 			<td> {{x.HourStart}} </td>
 			<td> {{x.HourEnd}} </td>
 			<td> 
-			<i class="fa fa-trash" aria-hidden="true"  ng-click="deleteRule(x.DayOfWeek, x.HourStart, x.HourStop)"></i>
+			<i class="fa fa-trash" aria-hidden="true"  ng-click="deleteRule(x.DayOfWeek, x.HourStart, x.HourEnd)"></i>
 			</td>
 			</tr>
 			</table>
@@ -70,11 +70,11 @@
 					  <option value="0">Niedziela</option>
 					</select>
 				</div>
-				<div  class="col-sm-3" ng-model="rule.HourStart">
-					<input type="time">
+				<div  class="col-sm-3" >
+					<input ng-model="rule.HourStart" type="time">
 				</div>
-				<div  class="col-sm-3" ng-model="rule.HourStop">
-					<input type="time">
+				<div  class="col-sm-3" >
+					<input ng-model="rule.HourEnd" type="time">
 				</div>
 				<div class="col-sm-3">
 					<button class="btn btn-success btn-md btn-save" ng-click="saveRule()">Zapisz</button>
