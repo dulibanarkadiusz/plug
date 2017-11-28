@@ -1,4 +1,4 @@
-var apiUrl = "http://192.168.43.37:8081/api/";
+var apiUrl = "http://192.168.43.99:8081/api/";
 angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $state, $http, amMoment, $timeout, $uibModal){
 	$scope.device = {};
 	$scope.indicators = {};
