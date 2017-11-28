@@ -429,6 +429,7 @@
     </Compile>
     <Compile Include="Helpers\CommunicationHelper.cs" />
     <Compile Include="Helpers\Config.cs" />
+    <Compile Include="Helpers\HexConverter.cs" />
     <Compile Include="Models\Current.cs" />
     <Compile Include="Models\CurrentRun.cs" />
     <Compile Include="Models\DecodeHelper.cs" />

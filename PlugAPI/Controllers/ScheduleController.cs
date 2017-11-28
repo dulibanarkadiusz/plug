@@ -106,6 +106,9 @@ namespace PlugAPI.Controllers
                 }
             }
 
+            UpdateSchedule(ref msgToSend);
+
+
 
             XDocument msgReceived;
             try
@@ -120,6 +123,26 @@ namespace PlugAPI.Controllers
             return Get();
         }
 
+
+        private void UpdateSchedule(ref XDocument msg)
+        {
+            for (int i=0; i<=6; i++) // for each day of week
+            {
+                var value = msg.Descendants("Device.System.Power.Schedule." + i + ".List").First().Value;
+                if (value.Length > 0)
+                {
+                    string[] encodedHours = value.Split('-');
+                    var scheduleList = new List<Schedule>();
+                    foreach(var h in encodedHours)
+                    {
+                        if (!String.IsNullOrEmpty(h))
+                            scheduleList.Add(DecodeHelper.DecodeString(i, h));
+                    }
+
+                    msg.Descendants("Device.System.Power.Schedule." + i).First().Value = HexConverter.PreparePowerSchedule(scheduleList);
+                }
+            }
+        }
 
 
         /// <summary>
@@ -176,6 +199,7 @@ namespace PlugAPI.Controllers
             }
 
             msgToSend.Descendants("Device.System.Power.Schedule." + scheduleList[0].DayOfWeek + ".List").First().Value = currentValue.Replace(decodedVal, "");
+            UpdateSchedule(ref msgToSend);
             try
             {
                 cm.SendMessage(msgToSend, Config.IPadress, Config.Username, Config.Password);
