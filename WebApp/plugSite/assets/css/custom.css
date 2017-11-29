@@ -303,3 +303,53 @@ input:checked + .slider:before {
     padding: 15px;
 }
 
+.indicator{
+	padding: 10px;
+	height: 80px;
+	color: #fff;
+}
+
+.indicator .value{
+	font-size: calc(0.4vw + 13px);
+}
+
+.indicator .title{
+	font-size: 12px;
+	position: absolute;
+	bottom: 10px;
+	right: 0;
+}
+
+.indicator .icon{
+	height: 80px;
+	margin: 0 !important;
+	padding: 0 !important;
+	text-align: center;
+}
+
+.indicator .icon > i{
+	font-size: 50px;
+	line-height: 70px;
+	margin-top: -2px;
+}
+
+.indicator .value-box{
+	padding: 0 !important;
+	height: 70px;
+}
+
+.blue{
+	background: #4b7690;
+}
+
+.orange{
+	background: #b99479;
+}
+
+.red{
+	background: #a55c5c;
+}
+
+.green{
+	background: #769473;
+}
