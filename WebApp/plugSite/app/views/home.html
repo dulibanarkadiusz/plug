@@ -123,10 +123,22 @@
 					</select>
 				</div>
 				<div  class="col-sm-3" >
-					<input class="form-control" ng-model="rule.HourStart" type="time">
+					<div class="timepicker" class="input-append">
+						<input class="form-control" data-format="hh:mm" ng-model="rule.HourStart" type="text"></input>
+						<span class="add-on">
+						  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						  </i>
+						</span>
+					  </div>
 				</div>
 				<div  class="col-sm-3" >
-					<input class="form-control" ng-model="rule.HourEnd" type="time">
+					  <div class="timepicker" class="input-append">
+						<input class="form-control" data-format="hh:mm" ng-model="rule.HourEnd" type="text"></input>
+						<span class="add-on">
+						  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						  </i>
+						</span>
+					  </div>
 				</div>
 				<div class="col-sm-2">
 					<button class="btn btn-success btn-md " ng-click="saveRule()">Zapisz</button>
@@ -177,4 +189,13 @@
   $(".indicatorLastToggle").mouseleave( function(){
   	$('[data-toggle="tooltip-indicator"]').tooltip('hide');
   });
+</script>
+
+<script type="text/javascript">
+				  $(function() {
+					$('.timepicker').datetimepicker({
+					  pickDate: false,
+					  pickSeconds: false
+					});
+				  });
 </script>
