@@ -215,4 +215,3 @@ FakesAssemblies/
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
-WebApp/plugSite/app/MainCtrl.js
