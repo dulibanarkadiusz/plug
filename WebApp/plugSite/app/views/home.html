@@ -101,7 +101,7 @@
 						<button class="btn btn-success btn-md" data-toggle="tooltip" data-placement="left" title="Utwórz nowe, zaplanowane i powtarzalne zdarzenie">Dodaj nowe zdarzenie</button>
 					</div>
 					<div class="row" ng-show="scheduleEditorEnabled">
-								<div id="addRule-container">
+		<div id="addRule-container">
 			
 			<div class="row">
 				<div class="col-sm-4">Dzień tygodnia:</div>
@@ -123,15 +123,30 @@
 					</select>
 				</div>
 				<div  class="col-sm-3" >
-					<input class="form-control" ng-model="rule.HourStart" type="time">
+					<div class="form-group">
+						<div class='input-group date' id='timepicker1'>
+							<input type='text' class="form-control" ng-model="rule.HourStart"  ng-blur="updateHourStart($event)" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-time"></span>
+							</span>
+						</div>
+					</div>
 				</div>
 				<div  class="col-sm-3" >
-					<input class="form-control" ng-model="rule.HourEnd" type="time">
+					<div class="form-group">
+						<div class='input-group date' id='timepicker2'>
+							<input type='text' class="form-control" ng-model="rule.HourEnd" ng-blur="updateHourEnd($event)" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-time"></span>
+							</span>
+						</div>
+					</div>
 				</div>
 				<div class="col-sm-2">
-					<button class="btn btn-success btn-md " ng-click="saveRule()">Zapisz</button>
+					<button class="btn btn-success btn-md " ng-click="checkHours()">Zapisz</button> 
 				</div>
 			</div>
+			<span class="message">{{message}}</span>
 		</div>
 					</div>
 				</div>
@@ -177,4 +192,18 @@
   $(".indicatorLastToggle").mouseleave( function(){
   	$('[data-toggle="tooltip-indicator"]').tooltip('hide');
   });
+</script>
+<script type="text/javascript">
+            $(function () {
+                $('#timepicker1').datetimepicker({
+                    format: 'LT'
+                });
+            });
+</script>
+<script type="text/javascript">
+            $(function () {
+                $('#timepicker2').datetimepicker({
+                    format: 'LT'
+                });
+            });
 </script>
