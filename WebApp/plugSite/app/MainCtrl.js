@@ -24,13 +24,17 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 		$scope.getIndicators();
 		$scope.getDeviceInfo();
 		$scope.getSchedule();
+		$scope.setDefaultRule();
 		
-		$scope.rule = {
-			HourStart: "0",
-			HourEnd: "1"
-		}
-
 		$timeout($scope.tryCancelInit, 100);
+	}
+	
+	$scope.setDefaultRule = function(){
+		$scope.rule = {
+				DayOfWeek: "1",
+				HourStart: "00:00",
+				HourEnd: "01:00"
+			}
 	}
 	
 	$scope.updateHourStart = function($event){
@@ -41,6 +45,10 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 		$scope.rule.HourEnd = $event.target.value;
 	}
 
+	$scope.updateDayOfWeek = function($event){
+		$scope.rule.dayOfWeek = $event.target.value;
+	}
+	
 	$scope.getDeviceInfo = function(){
 		$http({
 			method: 'GET',
@@ -93,12 +101,14 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 	    });
 	}
 
-	$scope.checkHours = function() {
-		if($scope.rule.HourStart < $scope.rule.HourEnd){
-			$scope.saveRule();
+	$scope.checkHours = function() {		
+		if($scope.rule.HourStart > $scope.rule.HourEnd){
+			$scope.hoursMessage = "Godzina rozpoczęcia musi być wczesniej niż godzina zakończenia.";
 		}
 		else{
-			$scope.message = "Godzina rozpoczęcia musi być wczesniej niż godzina zakończenia.";
+			$scope.hoursMessage ="";
+			$scope.saveRule();
+			$scope.setDefaultRule();
 		}
 	}
 	

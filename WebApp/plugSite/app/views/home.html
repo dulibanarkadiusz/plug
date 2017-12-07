@@ -41,7 +41,7 @@
 					</div>
 				</div>
 				<div class="col-xs-10 text-right value-box">
-					<div class="value">{{indicators.CurrentValue}} A </div>
+					<div class="value">{{indicators.CurrentValueindicators.CurrentValue}} A </div>
 					<div class="title">Natężenie prądu</div>
 				</div>
 			</div>
@@ -112,7 +112,7 @@
 		
 			<div class="row">
 				<div class="col-sm-4">
-					<select class="form-control" ng-model="rule.DayOfWeek">
+					<select class="form-control" ng-model="rule.DayOfWeek" ng-blur="updateDayOfWeek($event)">
 					  <option value="1">Poniedziałek</option>
 					  <option value="2">Wtorek</option>
 					  <option value="3">Środa</option>
@@ -145,8 +145,8 @@
 				<div class="col-sm-2">
 					<button class="btn btn-success btn-md " ng-click="checkHours()">Zapisz</button> 
 				</div>
+					<span class="message col-sm-6">{{hoursMessage}}</span>
 			</div>
-			<span class="message">{{message}}</span>
 		</div>
 					</div>
 				</div>
