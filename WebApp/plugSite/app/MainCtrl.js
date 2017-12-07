@@ -10,7 +10,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 	var isCatched = false;
 
 	$scope.init = function(){
-		/*modalInstance = $uibModal.open({
+		modalInstance = $uibModal.open({
 			animation: $scope.animationsEnabled,
 			backdrop: 'static',
 			templateUrl: 'app/views/waitModal.html'
@@ -18,7 +18,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 
 		modalInstance.result.then(function(){
 		}, function(){
-		});*/
+		});
 
 		$scope.getStatus();
 		$scope.getIndicators();
@@ -197,7 +197,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 	$scope.httpSuccess = function(){
 		successCount++;
 		$scope.errorString = "";
-		//modalInstance.dismiss('close');
+		modalInstance.dismiss('close');
 	}
 
 	$scope.httpError = function(){
@@ -205,7 +205,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 			$scope.errorString = "Utracono połączenie z urządzeniem!";
 		}
 		else if (!isCatched){
-			/*modalInstance.dismiss('close');
+			modalInstance.dismiss('close');
 			modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
 				backdrop: 'static',
@@ -214,7 +214,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 
 			modalInstance.result.then(function(){
 				}, function(){
-			});*/
+			});
 
 			isCatched = true;
 		}
@@ -222,7 +222,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 
 	$scope.tryCancelInit = function(){
 		if (successCount == 3){
-			//modalInstance.dismiss('close');
+			modalInstance.dismiss('close');
 			$timeout($scope.getDeviceParams, 5000);
 		}
 		else if (errorsCount > 1){
