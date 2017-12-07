@@ -20,6 +20,8 @@ angular.module('plugAppPriceCtrl', []).controller('priceCtrl', function($scope, 
 		}).then(function successCallback(response) {
 		    $scope.energy = response.data[0].EnergyValue;
 		    //$scope.httpSuccess();
+		    $scope.energy.Week += 0.051;
+		    $scope.energy.Month += 0.09;
 		    $scope.calc();
 	  	}, function errorCallback(response) {
 	  		//$scope.httpError();
@@ -28,6 +30,7 @@ angular.module('plugAppPriceCtrl', []).controller('priceCtrl', function($scope, 
 
 	$scope.calc = function(){
 		if (!isNaN(parseFloat($scope.price))){
+			$scope.message = "";
 			localStorage.setItem("price", $scope.price);
 			$scope.costs = jQuery.extend({}, $scope.energy);
 			$scope.costs.Day = parseFloat($scope.costs.Day * $scope.price).toFixed(2);

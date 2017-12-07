@@ -1,4 +1,4 @@
-﻿var apiUrl = "http://localhost:50323/api/";
+﻿var apiUrl = "http://localhost:8082/api/";
 angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $state, $http, amMoment, $timeout, $uibModal){
 	$scope.device = {};
 	$scope.indicators = {};
@@ -39,10 +39,12 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 	
 	$scope.updateHourStart = function($event){
 		$scope.rule.HourStart = $event.target.value;
+		$scope.hoursMessage ="";
 	}
 	
 	$scope.updateHourEnd = function($event){
 		$scope.rule.HourEnd = $event.target.value;
+		$scope.hoursMessage ="";
 	}
 
 	$scope.updateDayOfWeek = function($event){
@@ -132,7 +134,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 		
 		$scope.ruleList = [];
 		$scope.ruleList.push($scope.rule);
-		console.log(angular.toJson($scope.ruleList));
+		$scope.scheduleEditorEnabled = false;
 
 		$http({
 			method: 'POST',
@@ -182,7 +184,7 @@ angular.module('plugAppMainCtrl', []).controller('mainCtrl', function($scope, $s
 	$scope.getDeviceParams = function(){
 		$scope.getStatus();
 		$scope.getIndicators();
-		$timeout($scope.getDeviceParams, 5000);
+		$timeout($scope.getDeviceParams, 1000);
 	}
 
 
